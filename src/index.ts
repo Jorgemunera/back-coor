@@ -1,18 +1,23 @@
-import express from 'express';
 import { createServer } from 'http';
+import app from './app';
+import { config } from 'config/config';
 
 // Server
-const app = express();
 const server = createServer(app);
 
 // Port
-const port = process.env.PORT || 3000;
+const port = config.port;
 
-// Routes
-app.get('/', (req, res) => {
-  res.send("hello world");
-});
+const start = () => {
+  try {
+    server.listen(port, () => {
+      console.log(`Server corriendo en puerto: ${port}`);
+    });
+  } catch (error) {
+    console.error('Error al iniciar el servidor:', error);
+    process.exit(1);
+  }
+}
 
-server.listen(() => {
-  console.log(`Server corriendo en puerto: ${port}`);
-});
+start();
+
