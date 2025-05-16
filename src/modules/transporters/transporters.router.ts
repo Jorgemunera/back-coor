@@ -8,7 +8,7 @@ const router = Router();
 
 /**
  * @swagger
- * /api/transporters:
+ * /api/v1/transporters:
  *   get:
  *     summary: Obtener todos los transportistas
  *     tags: [Transporters]
@@ -17,6 +17,28 @@ const router = Router();
  *     responses:
  *       200:
  *         description: Lista de todos los transportistas
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items:
+ *                type: object
+ *                properties:
+ *                  id:
+ *                    type: integer
+ *                    example: 1
+ *                  name:
+ *                    type: string
+ *                    example: "Ana Beltrán"
+ *                  capacity:
+ *                    type: integer
+ *                    example: 100
+ *                  is_available:
+ *                    type: boolean
+ *                    example: 1 or 0
+ *                  created_at:
+ *                    type: string
+ *                    format: date-time
  *       401:
  *         description: No autorizado
  *       403:
@@ -30,7 +52,7 @@ router.get('/',
 
 /**
  * @swagger
- * /api/transporters/available:
+ * /api/v1/transporters/available:
  *   get:
  *     summary: Obtener lista de transportistas disponibles
  *     tags: [Transporters]
@@ -39,6 +61,28 @@ router.get('/',
  *     responses:
  *       200:
  *         description: Lista de los transportistas disponibles
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items:
+ *                type: object
+ *                properties:
+ *                  id:
+ *                    type: integer
+ *                    example: 1
+ *                  name:
+ *                    type: string
+ *                    example: "Ana Beltrán"
+ *                  capacity:
+ *                    type: integer
+ *                    example: 100
+ *                  is_available:
+ *                    type: boolean
+ *                    example: 1 or 0
+ *                  created_at:
+ *                    type: string
+ *                    format: date-time
  *       401:
  *         description: No autorizado
  *       403:
