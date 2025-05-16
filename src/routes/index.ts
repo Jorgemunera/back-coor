@@ -14,10 +14,10 @@ export function routerApi(app: express.Application): void{
   app.use('/api/v1', router);
 
   // Rutas
-  // router.use('auth', authRouter);
-  // router.use('users', usersRouter);
-  // router.use('orders', ordersRouter);
-  // router.use('routes', routesRouter);
-  router.use('transporters', transportersRouter);
-  // router.use('reports', reportsRouter);
+  // router.use('/auth', authRouter);
+  // router.use('/users', usersRouter);
+  // router.use('/orders', ordersRouter);
+  // router.use('/routes', routesRouter);
+  router.use('/transporters', transportersRouter);
+  // router.use('/reports', reportsRouter);
 }

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getEnabledTransportersUseCase } from './usecases/getTransporters';
+import { getEnabledTransportersUseCase } from './usecases/getEnabledTransporters';
 import { getAllTransportersUseCase } from './usecases/getAllTransporters';
 
 export const getEnabledTransportersController = async (
