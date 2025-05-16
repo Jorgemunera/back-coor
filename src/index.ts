@@ -1,6 +1,6 @@
 import { createServer } from 'http';
 import app from './app';
-import { config } from 'config/config';
+import { config } from 'shared/config/config';
 
 // Server
 const server = createServer(app);
