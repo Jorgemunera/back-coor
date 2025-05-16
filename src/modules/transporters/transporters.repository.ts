@@ -10,7 +10,7 @@ export const getAllTransporters = async (): Promise<Transporter[]> => {
 
 export const getAvailableTransporters = async (): Promise<Transporter[]> => {
   const [rows]: [Transporter[]] | any = await db.query(
-    'SELECT id, name, capacity FROM transporters WHERE is_available = true ORDER BY name ASC'
+    'SELECT * FROM transporters WHERE is_available = true ORDER BY name ASC'
   );
   return rows;
 };
