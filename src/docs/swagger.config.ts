@@ -43,6 +43,23 @@ const swaggerDefinition = {
           transporterId: { type: 'integer', example: 3 },
         },
       },
+      Register: {
+        type: 'object',
+        required: ['name', 'email', 'password'],
+        properties: {
+          name: { type: 'string', example: 'Juan Pérez' },
+          email: { type: 'string', example: 'juan@example.com' },
+          password: { type: 'string', example: '12345678' },
+        },
+      },
+      Login: {
+        type: 'object',
+        required: ['email', 'password'],
+        properties: {
+          email: { type: 'string', example: 'juan@example.com'},
+          password: { type: 'string', example: '12345678' },
+        },
+      },
     },
   },
   security: [

@@ -3,7 +3,7 @@ import express from 'express';
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "../docs/swagger.config.ts";
 
-// import authRouter from '../modules/auth/auth.router.ts';
+import authRouter from '../modules/auth/auth.router.ts';
 // import usersRouter from '../modules/users/users.router.ts';
 // import ordersRouter from '../modules/orders/orders.router.ts';
 import routesRouter from '../modules/routes/routes.router.ts';
@@ -17,7 +17,7 @@ export function routerApi(app: express.Application): void{
   app.use('/api/v1', router);
 
   // Rutas
-  // router.use('/auth', authRouter);
+  router.use('/auth', authRouter);
   // router.use('/users', usersRouter);
   // router.use('/orders', ordersRouter);
   router.use('/routes', routesRouter);
