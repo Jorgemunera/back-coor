@@ -2,7 +2,7 @@ import { OrderEmailData } from "../types/email";
 
 export const buildOrderConfirmationEmail = (order: OrderEmailData): string => {
   return `
-    <div style="font-family: Arial, sans-serif; padding: 24px; max-width: 600px; margin: auto; background-color: #f9f9f9; border-radius: 8px;">
+    <div style="font-family: Arial, sans-serif; padding: 24px; max-width: 600px; margin: auto; background-color:rgb(191, 190, 226); border-radius: 8px;">
       <h2 style="color: #2b4eff;">📦 Orden #${order.orderId} registrada exitosamente</h2>
       <p style="font-size: 16px;">Gracias por confiar en nosotros. Aquí tienes los detalles de tu envío:</p>
 

@@ -5,6 +5,7 @@ import { getOrderHistoryUseCase } from './usecases/getOrderHistory';
 import { createOrderUseCase } from './usecases/createOrder';
 import { updateOrderStatusUseCase } from './usecases/updateOrderStatus';
 import { OrderStatus } from '../../shared/types/order';
+import { assignTransporterUseCase } from './usecases/assignTransporter';
 
 export const getOrdersController = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -62,7 +63,7 @@ export const createOrderController = async (req: Request, res: Response): Promis
       destinationAddress,
     });
 
-    res.status(201).json({ orderId, message: 'Orden creada correctamente' });
+    res.status(201).json({ orderId, message: 'Order created successfully' });
   } catch (err: any) {
     res.status(400).json({ error: err.message });
   }
@@ -81,6 +82,24 @@ export const updateOrderStatusController = async (req: Request, res: Response): 
     await updateOrderStatusUseCase(orderId, status as OrderStatus);
 
     res.status(200).json({ message: 'status success update' });
+  } catch (error: any) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+export const assignTransporterController = async (req: Request, res: Response) => {
+  try {
+    const orderId = Number(req.params.id);
+    const { routeId, transporterId } = req.body;
+
+    if (isNaN(orderId)) {
+      res.status(400).json({ error: 'IInvalid ID' });
+      return;
+    }
+
+    await assignTransporterUseCase(orderId, routeId, transporterId);
+
+    res.status(200).json({ message: 'Order assigned successfully' });
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }

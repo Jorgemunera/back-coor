@@ -5,7 +5,7 @@ export const buildStatusUpdateEmail = (
   newStatus: OrderStatus
 ): string => {
   return `
-    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 24px; background-color: #f9f9f9; border-radius: 8px;">
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 24px; background-color: rgb(191, 190, 226); border-radius: 8px;">
       <h2 style="color: #2b4eff;">📦 Tu envío #${orderId} cambió de estado</h2>
       <p>La orden <strong>#${orderId}</strong> ahora se encuentra en el estado:</p>
       <p style="font-size: 20px; font-weight: bold; color: #007b00;">${newStatus}</p>
