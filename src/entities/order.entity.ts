@@ -1,3 +1,5 @@
+import { OrderStatus } from '../shared/types/order';
+
 export interface Order {
   id: number;
   userId: number;
@@ -5,6 +7,6 @@ export interface Order {
   dimensions: string;
   productType: string;
   destinationAddress: string;
-  status: 'En espera' | 'En tránsito' | 'Entregado';
+  status: OrderStatus;
   createdAt: Date;
 }

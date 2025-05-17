@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { authenticate } from '../../shared/middlewares/auth.handler';
-import { createOrderController, getOrderHistoryController, getOrdersController } from './orders.controller';
+import { createOrderController, getOrderHistoryController, getOrdersController, updateOrderStatusController } from './orders.controller';
 import { getOrderStatusController } from './orders.controller';
 import { createOrderSchema } from './schemas/createOrder.schema';
 import { validateSchema } from '../../shared/middlewares/validator.handler';
@@ -119,5 +119,57 @@ router.post(
   createOrderController
 );
 
+/**
+ * @swagger
+ * /api/v1/orders/{id}/status:
+ *   put:
+ *     summary: Actualizar el estado de una orden
+ *     tags: [Orders]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de la orden
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - status
+ *             properties:
+ *               status:
+ *                 type: string
+ *                 enum: [En espera, En tránsito, Entregado]
+ *                 example: "En tránsito"
+ *     responses:
+ *       200:
+ *         description: Estado actualizado correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Estado actualizado correctamente
+ *       400:
+ *         description: ID inválido o estado no permitido
+ *       401:
+ *         description: No autorizado
+ *       403:
+ *         description: Acceso denegado
+ *       404:
+ *         description: Orden no encontrada
+ */
+router.put('/:id/status',
+  authenticate,
+  updateOrderStatusController
+);
 
 export default router;
