@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { getAllRoutesController } from './routes.controller';
-// import { authenticate } from '../../middlewares/authMiddleware';
-// import { isAdmin } from '../../middlewares/roleMiddleware';
+import { isAdmin } from '../../shared/middlewares/checkRole.handler';
+import { authenticate } from '../../shared/middlewares/auth.handler';
 
 const router = Router();
 
@@ -38,8 +38,8 @@ const router = Router();
  *         description: Acceso denegado
  */
 router.get('/',
-  // authenticate,
-  // isAdmin,
+  authenticate,
+  isAdmin,
   getAllRoutesController
 );
 

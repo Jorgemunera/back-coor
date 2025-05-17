@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { getEnabledTransportersController } from './transporters.controller';
-// import { authenticate } from '../../middlewares/authMiddleware';
-// import { isAdmin } from '../../middlewares/roleMiddleware';
 import { getAllTransportersController } from './transporters.controller';
+import { isAdmin } from '../../shared/middlewares/checkRole.handler';
+import { authenticate } from '../../shared/middlewares/auth.handler';
 
 const router = Router();
 
@@ -45,8 +45,8 @@ const router = Router();
  *         description: Acceso denegado
  */
 router.get('/',
-  // authenticate,
-  // isAdmin,
+  authenticate,
+  isAdmin,
   getAllTransportersController
 );
 
@@ -89,8 +89,8 @@ router.get('/',
  *         description: Acceso denegado
  */
 router.get('/available',
-  // authenticate,
-  // isAdmin,
+  authenticate,
+  isAdmin,
   getEnabledTransportersController
 );
 
