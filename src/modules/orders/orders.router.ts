@@ -1,9 +1,11 @@
 import { Router } from 'express';
 import { authenticate } from '../../shared/middlewares/auth.handler';
-import { createOrderController, getOrderHistoryController, getOrdersController, updateOrderStatusController } from './orders.controller';
+import { assignTransporterController, createOrderController, getOrderHistoryController, getOrdersController, updateOrderStatusController } from './orders.controller';
 import { getOrderStatusController } from './orders.controller';
 import { createOrderSchema } from './schemas/createOrder.schema';
 import { validateSchema } from '../../shared/middlewares/validator.handler';
+import { isAdmin } from '../../shared/middlewares/checkRole.handler';
+import { assignTransporterSchema } from './schemas/assignTransporter.schema';
 
 const router = Router();
 
@@ -170,6 +172,53 @@ router.post(
 router.put('/:id/status',
   authenticate,
   updateOrderStatusController
+);
+
+
+/**
+ * @swagger
+ * /api/v1/orders/{id}/assign:
+ *   post:
+ *     summary: Asignar una orden a un transportista y una ruta
+ *     tags: [Orders]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de la orden
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               routeId:
+ *                 type: integer
+ *               transporterId:
+ *                 type: integer
+ *     responses:
+ *       200:
+ *         description: Orden asignada correctamente
+ *       400:
+ *         description: Datos inválidos
+ *       401:
+ *         description: No autorizado
+ *       403:
+ *         description: Solo administradores
+ *       404:
+ *         description: Orden o transportista no encontrados
+ */
+router.post(
+  '/:id/assign',
+  authenticate,
+  isAdmin,
+  validateSchema(assignTransporterSchema),
+  assignTransporterController
 );
 
 export default router;

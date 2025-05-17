@@ -3,6 +3,7 @@ import { Order } from '../../entities/order.entity';
 import { OrderStatusHistory } from 'entities/orderStatusHistory.entity';
 import { CreateOrderInput } from './types';
 import { OrderStatus } from '../../shared/types/order';
+import { mapOrder, mapOrderStatusHistory } from '../../shared/utils/mappers';
 
 export const getOrders = async (status?: OrderStatus): Promise<Order[]> => {
   let query = `SELECT * FROM orders`;
@@ -17,8 +18,10 @@ export const getOrders = async (status?: OrderStatus): Promise<Order[]> => {
 
   console.log('Query:', query);
   console.log('Params:', params);
-  const [rows]: [Order[]] | any[] = await db.query(query, params);
-  return rows;
+  const [rows]: any[] = await db.query(query, params);
+
+  // mapper
+  return rows.map(mapOrder);
 };
 
 
@@ -31,7 +34,7 @@ export const getOrderHistoryById  = async (orderId: number): Promise<OrderStatus
     [orderId]
   );
 
-  return rows;
+  return rows.map(mapOrderStatusHistory);
 };
 
 
@@ -47,7 +50,7 @@ export const getUserOrderHistoryRepository = async (userId: number): Promise<Ord
     [userId]
   );
 
-  return rows;
+  return rows.map(mapOrder);
 };
 
 
@@ -119,4 +122,59 @@ export const markTransporterAvailable = async (transporterId: number): Promise<v
   await db.query('UPDATE transporters SET is_available = TRUE WHERE id = ?', [
     transporterId,
   ]);
+};
+
+export const assignTransporter = async (
+  orderId: number,
+  routeId: number,
+  transporterId: number
+): Promise<void> => {
+  await db.query(
+    `INSERT INTO order_assignments (order_id, route_id, transporter_id)
+     VALUES (?, ?, ?)`,
+    [orderId, routeId, transporterId]
+  );
+};
+
+export const markTransporterUnavailable = async (transporterId: number) => {
+  await db.query(
+    `UPDATE transporters SET is_available = FALSE WHERE id = ?`,
+    [transporterId]
+  );
+};
+
+export const getOrderIfPending = async (orderId: number): Promise<Order> => {
+  const [rows]: any = await db.query(
+    `SELECT * FROM orders WHERE id = ? AND status = 'En espera'`,
+    [orderId]
+  );
+  if (rows.length === 0) {
+    throw new Error('Order not found or not in "En espera" state');
+  }
+  return mapOrder(rows[0]);
+};
+
+export const assignOrder = async (
+  orderId: number,
+  transporterId: number,
+  routeId: number
+): Promise<void> => {
+  await db.query(
+    `INSERT INTO order_assignments (order_id, route_id, transporter_id) VALUES (?, ?, ?)`,
+    [orderId, routeId, transporterId]
+  );
+
+  await db.query(`UPDATE orders SET status = 'En tránsito' WHERE id = ?`, [
+    orderId,
+  ]);
+};
+
+export const insertStatus = async (
+  orderId: number,
+  status: 'En espera' | 'En tránsito' | 'Entregado'
+): Promise<void> => {
+  await db.query(
+    `INSERT INTO order_status_history (order_id, status) VALUES (?, ?)`,
+    [orderId, status]
+  );
 };
