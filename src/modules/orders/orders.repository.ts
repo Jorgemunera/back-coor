@@ -2,8 +2,9 @@ import { db } from '../../shared/database/mysql';
 import { Order } from '../../entities/order.entity';
 import { OrderStatusHistory } from 'entities/orderStatusHistory.entity';
 import { CreateOrderInput } from './types';
+import { OrderStatus } from '../../shared/types/order';
 
-export const getOrders = async (status?: string): Promise<Order[]> => {
+export const getOrders = async (status?: OrderStatus): Promise<Order[]> => {
   let query = `SELECT * FROM orders`;
   const params: any[] = [];
 
@@ -78,4 +79,44 @@ export const insertInitialStatus = async (orderId: number) => {
     `INSERT INTO order_status_history (order_id, status) VALUES (?, ?)`,
     [orderId, 'En espera']
   );
+};
+
+export const getOrderWithUserId = async (orderId: number): Promise<{ status: OrderStatus, userId: number }> => {
+  const [rows]: any = await db.query(
+    'SELECT status, user_id FROM orders WHERE id = ?',
+    [orderId]
+  );
+  if (rows.length === 0) throw new Error('Orden no encontrada');
+  return {
+    status: rows[0].status,
+    userId: rows[0].user_id,
+  };
+};
+
+export const updateOrderStatusInDb = async (orderId: number, newStatus: OrderStatus): Promise<void> => {
+  await db.query('UPDATE orders SET status = ? WHERE id = ?', [
+    newStatus,
+    orderId,
+  ]);
+};
+
+export const insertOrderStatusHistory = async (orderId: number, status: OrderStatus): Promise<void> => {
+  await db.query(
+    'INSERT INTO order_status_history (order_id, status) VALUES (?, ?)',
+    [orderId, status]
+  );
+};
+
+export const findAssignedTransporterByOrderId = async (orderId: number): Promise<number | null> => {
+  const [rows]: any = await db.query(
+    'SELECT transporter_id FROM order_assignments WHERE order_id = ?',
+    [orderId]
+  );
+  return rows.length ? rows[0].transporter_id : null;
+};
+
+export const markTransporterAvailable = async (transporterId: number): Promise<void> => {
+  await db.query('UPDATE transporters SET is_available = TRUE WHERE id = ?', [
+    transporterId,
+  ]);
 };

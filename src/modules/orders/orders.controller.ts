@@ -3,11 +3,13 @@ import { getOrdersUseCase } from './usecases/getOrders';
 import { getOrderStatusUseCase } from './usecases/getOrderStatus';
 import { getOrderHistoryUseCase } from './usecases/getOrderHistory';
 import { createOrderUseCase } from './usecases/createOrder';
+import { updateOrderStatusUseCase } from './usecases/updateOrderStatus';
+import { OrderStatus } from '../../shared/types/order';
 
 export const getOrdersController = async (req: Request, res: Response): Promise<void> => {
   try {
     const { status } = req.query;
-    const orders = await getOrdersUseCase(status as string);
+    const orders = await getOrdersUseCase(status as OrderStatus);
     res.status(200).json({ data: orders });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
@@ -63,5 +65,23 @@ export const createOrderController = async (req: Request, res: Response): Promis
     res.status(201).json({ orderId, message: 'Orden creada correctamente' });
   } catch (err: any) {
     res.status(400).json({ error: err.message });
+  }
+};
+
+export const updateOrderStatusController = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const orderId = Number(req.params.id);
+    const { status } = req.body;
+
+    if (!orderId || typeof status !== 'string') {
+      res.status(400).json({ error: 'status or orderId inválido' });
+      return;
+    }
+
+    await updateOrderStatusUseCase(orderId, status as OrderStatus);
+
+    res.status(200).json({ message: 'status success update' });
+  } catch (error: any) {
+    res.status(400).json({ error: error.message });
   }
 };
