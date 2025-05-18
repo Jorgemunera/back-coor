@@ -16,8 +16,6 @@ export const getOrders = async (status?: OrderStatus): Promise<Order[]> => {
 
   query += ` ORDER BY created_at DESC`;
 
-  console.log('Query:', query);
-  console.log('Params:', params);
   const [rows]: any[] = await db.query(query, params);
 
   // mapper
