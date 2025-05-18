@@ -83,12 +83,13 @@ npm run test
 |--------|----------------------------------|----------------------------------------------------|
 | POST   | `/api/v1/auth/register`         | Registrar nuevo usuario                            |
 | POST   | `/api/v1/auth/login`            | Login de usuario y obtención de token              |
-| GET    | `/api/v1/orders`                | Listar órdenes (filtrables)             |
+| GET    | `/api/v1/orders`                | Listar órdenes (filtrables)                        |
 | POST   | `/api/v1/orders`                | Crear nueva orden                                  |
 | PUT    | `/api/v1/orders/:id/status`     | Actualizar estado de orden                         |
 | POST   | `/api/v1/orders/:id/assign`     | Asignar ruta y transportista a orden               |
 | GET    | `/api/v1/orders/:id/status`     | Consultar estado actual de orden                   |
 | GET    | `/api/v1/orders/:id/history`    | Consultar historial de estados de orden            |
+| GET    | `/api/v1/orders/history/my`     | Historial de ordenes de un usuario                 |
 | GET    | `/api/v1/orders/history/all`    | Historial completo de todas las órdenes (admin)    |
 | GET    | `/api/v1/reports/orders`        | Obtener reportes detallados de órdenes             |
 | DELETE | `/api/v1/cache/reports`         | Eliminar caché de reportes                         |

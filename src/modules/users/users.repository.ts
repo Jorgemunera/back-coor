@@ -4,6 +4,7 @@ import { mapUser } from '../../shared/utils/mappers';
 
 export const findUserByEmail = async (email: string): Promise<User | null> => {
   const [rows]: [User[]] | any = await db.query(`SELECT * FROM users WHERE email = ?`, [email]);
+  if (!rows || rows.length === 0) return null;
   return mapUser(rows[0]) || null;
 };
 

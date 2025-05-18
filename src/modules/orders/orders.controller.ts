@@ -7,6 +7,7 @@ import { updateOrderStatusUseCase } from './usecases/updateOrderStatus';
 import { OrderStatus } from '../../shared/types/order';
 import { assignTransporterUseCase } from './usecases/assignTransporter';
 import { getAllOrdersHistoryUseCase } from './usecases/getAllOrdersHistory';
+import { getOrdersByUserUseCase } from './usecases/getOrdersByUser';
 
 export const getOrdersController = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -110,6 +111,18 @@ export const getAllOrdersHistoryController = async (req: Request, res: Response)
   try {
     const history = await getAllOrdersHistoryUseCase();
     res.status(200).json({ history });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+
+
+export const getOrdersByUserController = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const userId = req.user!.id;
+    const orders = await getOrdersByUserUseCase(userId);
+    res.status(200).json({ data: orders });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }

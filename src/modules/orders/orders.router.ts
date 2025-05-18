@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { authenticate } from '../../shared/middlewares/auth.handler';
-import { assignTransporterController, createOrderController, getAllOrdersHistoryController, getOrderHistoryController, getOrdersController, updateOrderStatusController } from './orders.controller';
+import { assignTransporterController, createOrderController, getAllOrdersHistoryController, getOrderHistoryController, getOrdersByUserController, getOrdersController, updateOrderStatusController } from './orders.controller';
 import { getOrderStatusController } from './orders.controller';
 import { createOrderSchema } from './schemas/createOrder.schema';
 import { validateSchema } from '../../shared/middlewares/validator.handler';
@@ -114,6 +114,27 @@ router.get('/:id/history',
   authenticate,
   getOrderHistoryController
 );
+
+
+/**
+ * @swagger
+ * /api/v1/orders/history/my:
+ *   get:
+ *     summary: Obtener órdenes del usuario autenticado
+ *     tags: [Orders]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista de órdenes del usuario
+ *       401:
+ *         description: No autorizado
+ */
+router.get('/history/my',
+  authenticate,
+  getOrdersByUserController
+);
+
 
 
 /**
