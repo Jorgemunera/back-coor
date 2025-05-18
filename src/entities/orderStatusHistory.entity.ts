@@ -1,6 +1,8 @@
+import { OrderStatus } from "../shared/types/order";
+
 export interface OrderStatusHistory {
   id: number;
   orderId: number;
-  status: 'En espera' | 'En tránsito' | 'Entregado';
+  status: OrderStatus;
   changedAt: Date;
 }
