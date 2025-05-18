@@ -27,7 +27,7 @@ export const getOrders = async (status?: OrderStatus): Promise<Order[]> => {
 
 export const getOrderHistoryById  = async (orderId: number): Promise<OrderStatusHistory[]> => {
   const [rows]: any[] = await db.query(
-    `SELECT id, order_id AS orderId, status, changed_at AS changedAt
+    `SELECT id, order_id, status, changed_at
      FROM order_status_history
      WHERE order_id = ?
      ORDER BY changed_at ASC`,
@@ -177,4 +177,14 @@ export const insertStatus = async (
     `INSERT INTO order_status_history (order_id, status) VALUES (?, ?)`,
     [orderId, status]
   );
+};
+
+export const getAllOrderStatusHistories = async (): Promise<OrderStatusHistory[]> => {
+  const [rows]: any[] = await db.query(
+    `SELECT id, order_id, status, changed_at
+     FROM order_status_history
+     ORDER BY changed_at DESC`
+  );
+
+  return rows.map(mapOrderStatusHistory);
 };

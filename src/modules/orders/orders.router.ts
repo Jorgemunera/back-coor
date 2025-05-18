@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { authenticate } from '../../shared/middlewares/auth.handler';
-import { assignTransporterController, createOrderController, getOrderHistoryController, getOrdersController, updateOrderStatusController } from './orders.controller';
+import { assignTransporterController, createOrderController, getAllOrdersHistoryController, getOrderHistoryController, getOrdersController, updateOrderStatusController } from './orders.controller';
 import { getOrderStatusController } from './orders.controller';
 import { createOrderSchema } from './schemas/createOrder.schema';
 import { validateSchema } from '../../shared/middlewares/validator.handler';
@@ -35,6 +35,28 @@ const router = Router();
 router.get('/',
   authenticate,
   getOrdersController
+);
+
+/**
+ * @swagger
+ * /api/v1/orders/history/all:
+ *   get:
+ *     summary: Obtener historial de todas las órdenes
+ *     tags: [Orders]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista del historial de estados de todas las órdenes
+ *       401:
+ *         description: No autorizado
+ *       403:
+ *         description: Acceso denegado
+ */
+router.get('/history/all',
+  authenticate,
+  isAdmin,
+  getAllOrdersHistoryController
 );
 
 /**

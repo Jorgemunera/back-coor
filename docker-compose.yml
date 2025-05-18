@@ -10,7 +10,7 @@ services:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
     volumes:
-      - mysql_data:/var/lib/mysql
+      - ./mysql_data:/var/lib/mysql
     networks:
       - backend
 
@@ -34,9 +34,6 @@ services:
       - mysql
     networks:
       - backend
-
-volumes:
-  mysql_data:
 
 networks:
   backend:

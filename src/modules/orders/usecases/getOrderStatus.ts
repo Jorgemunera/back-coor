@@ -9,14 +9,14 @@ export const getOrderStatusUseCase = async (orderId: number): Promise<string> =>
 
   const cached = await redisClient.get(redisKey);
   if (cached) {
-    console.log('Cached status:', cached);
+    console.log('Cached status 🚀: ', cached);
     return cached
   };
 
   const status = await findOrderStatusById(orderId);
 
   await redisClient.setEx(redisKey, TTL_SECONDS, status);
-  console.log('Set status in cache:', status);
+  console.log('Set status in cache 👍🏻:', status);
 
   return status;
 };

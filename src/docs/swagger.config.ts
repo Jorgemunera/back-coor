@@ -4,7 +4,7 @@ const swaggerDefinition = {
   openapi: '3.0.0',
   info: {
     title: 'API Envíos',
-    version: '1.0.0',
+    version: 'v1',
     description: 'Documentación API envios',
   },
   servers: [

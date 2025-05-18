@@ -4,7 +4,7 @@ import { createUser, findUserByEmail } from '../../../modules/users/users.reposi
 
 export const registerUser = async (userData: User): Promise<void> => {
   const existingUser = await findUserByEmail(userData.email);
-  if (existingUser) throw new Error('El correo ya está en uso');
+  if (existingUser) throw new Error('User already exists');
 
   const hashedPassword = await hashPassword(userData.password);
   const user: User = {
