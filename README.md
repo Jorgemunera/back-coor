@@ -18,6 +18,7 @@ Este proyecto es una API RESTful construida en Node.js con TypeScript para la ge
 - **Zod (Validación de esquemas)**
 - **bcryptjs** (Hashing de contraseñas)
 - **SendGrid** (Envío de correos transaccionales)
+- **LocationIQ** (Serviio tercero para validación de direcciones)
 - **Jest** (Pruebas)
 - **Docker**
 
