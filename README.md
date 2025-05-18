@@ -71,7 +71,7 @@ npm run test
 
 ## 🗄️ Modelado de Base de Datos
 
-![Modelo de base de datos](ruta/a/tu/imagen.png)
+![Modelo de base de datos](./modelado-db.png)
 
 ---
 
