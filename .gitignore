@@ -191,3 +191,4 @@ $RECYCLE.BIN/
 package-lock.json
 yarn.lock
 src/mysql_data
+mysql_data

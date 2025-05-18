@@ -8,7 +8,8 @@ import authRouter from '../modules/auth/auth.router.ts';
 import ordersRouter from '../modules/orders/orders.router.ts';
 import routesRouter from '../modules/routes/routes.router.ts';
 import transportersRouter from '../modules/transporters/transporters.router.ts';
-// import reportsRouter from '../modules/reports/reports.router.ts';
+import reportsRouter from '../modules/reports/reports.router.ts';
+import cacheRouter from '../modules/cache/cache.router.ts';
 
 
 export function routerApi(app: express.Application): void{
@@ -22,6 +23,7 @@ export function routerApi(app: express.Application): void{
   router.use('/orders', ordersRouter);
   router.use('/routes', routesRouter);
   router.use('/transporters', transportersRouter);
-  // router.use('/reports', reportsRouter);
+  router.use('/reports', reportsRouter);
+  router.use('/cache', cacheRouter);
   router.use('/doc-api', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 }
