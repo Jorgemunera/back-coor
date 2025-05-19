@@ -159,7 +159,7 @@ export const assignOrder = async (
 ): Promise<void> => {
   await db.query(
     `INSERT INTO order_assignments (order_id, route_id, transporter_id) VALUES (?, ?, ?)`,
-    [orderId, routeId, transporterId]
+    [orderId, transporterId, routeId]
   );
 
   await db.query(`UPDATE orders SET status = 'En tránsito' WHERE id = ?`, [
