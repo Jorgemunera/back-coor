@@ -32,7 +32,7 @@ export const getOrdersReport = async (filters: OrderReportFilters): Promise<Orde
       AND (? IS NULL OR o.status = ?)
       AND (? IS NULL OR t.id = ?)
       AND (? IS NULL OR sh.changed_at >= ?)
-      AND (? IS NULL OR sh.changed_at <= ?)
+      AND (? IS NULL OR sh.changed_at < DATE_ADD(?, INTERVAL 1 DAY))
     GROUP BY o.id, o.status, t.name
     ORDER BY delivered_at DESC
     LIMIT ? OFFSET ?

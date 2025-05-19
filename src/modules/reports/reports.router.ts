@@ -1,4 +1,3 @@
-// src/modules/reports/routes.ts
 import { Router } from 'express';
 import { authenticate } from '../../shared/middlewares/auth.handler';
 import { isAdmin } from '../../shared/middlewares/checkRole.handler';
