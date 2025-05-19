@@ -99,7 +99,7 @@ export const assignTransporterController = async (req: Request, res: Response) =
       return;
     }
 
-    await assignTransporterUseCase(orderId, routeId, transporterId);
+    await assignTransporterUseCase(orderId, transporterId, routeId);
 
     res.status(200).json({ message: 'Order assigned successfully' });
   } catch (error: any) {
