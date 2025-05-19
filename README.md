@@ -129,8 +129,15 @@ http://localhost:8080
 # Acceso a usuarios
 # 🛡️ Admin:     admin@example.com / admin123
 # 👤 Usuario:   user@example.com  / user123
-# Puedes cambiar los emails de prueba pero los passwords debes conservarlos ya que se crean hasheados
+# 
+#
 ```
+
+---
+### Para tener en cuenta
+---
+* Si al validar la prueba falla el envío de correos (porque la API Key de SendGrid expiró), avísame por WhatsApp para generar una nueva, o usen sus propias credenciales (FROM_EMAIL y SENDGRID_API_KEY).
+* Puedes cambiar los emails de prueba pero los passwords debes conservarlos ya que se crean hasheados
 
 ---
 
